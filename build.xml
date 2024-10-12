@@ -1,0 +1,31 @@
+<project name="BlackJackGame" default="run" basedir=".">
+    <description>Builds, tests, and runs the project BlackJackGame.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <!-- Define the path for the libraries -->
+    <property name="lib.dir" location="lib"/> <!-- Assuming you place your libraries in a folder named 'lib' -->
+
+    <!-- Target to copy resources -->
+    <target name="copy-resources" depends="-pre-compile">
+        <copy todir="${build.classes.dir}/cards">
+            <fileset dir="resources/cards" />
+        </copy>
+    </target>
+
+    <!-- Override the run target to ensure resources are copied -->
+<target name="run" depends="copy-resources, BlackJackGame-impl.jar">
+    <java fork="true" classname="blackjackgame.BlackJackGUI2">
+        <classpath>
+            <pathelement path="${build.classes.dir}"/>
+            <pathelement path="${dist.jar}"/>
+            <fileset dir="${lib.dir}">
+                <include name="*.jar"/>
+            </fileset>
+            <pathelement path="${lib.dir}/derby.jar"/>
+            <pathelement path="${lib.dir}/derbytools.jar"/>
+        </classpath>
+    </java>
+</target>
+
+
+</project>
